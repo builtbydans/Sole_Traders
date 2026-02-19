@@ -1,0 +1,67 @@
+<div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow">
+  <!-- Page heading -->
+  <h1 class="text-2xl font-bold mb-6">Trader Dashboard</h1>
+
+  <% if (trader) { %>
+  <!-- Trader summary -->
+  <div class="mb-6">
+    <p class="text-lg">
+      Welcome,
+      <span class="font-semibold"><%= trader.name %></span>
+    </p>
+    <p class="text-sm text-gray-600"><%= trader.email %></p>
+  </div>
+  <% } %>
+
+  <!-- Actions -->
+  <div class="mb-6">
+    <h2 class="text-xl font-semibold mb-4">Your Actions</h2>
+
+    <ul class="space-y-3">
+      <li>
+        <a
+          href="/services/new"
+          class="block p-3 border rounded hover:bg-gray-50 transition"
+        >
+          ➕ Add a service
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="/services"
+          class="block p-3 border rounded hover:bg-gray-50 transition"
+        >
+          📋 View your services
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="/bookings"
+          class="block p-3 border rounded hover:bg-gray-50 transition"
+        >
+          📆 View bookings
+        </a>
+      </li>
+
+      <li>
+        <a
+          href="/traders/profile"
+          class="block p-3 border rounded hover:bg-gray-50 transition"
+        >
+          ✏️ <%= profileExists ? "Edit your profile" : "Create your profile" %>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Footer actions -->
+  <div class="pt-4 border-t flex justify-between items-center">
+    <span class="text-sm text-gray-500">
+      Logged in as <%= trader ? trader.name : "Trader" %>
+    </span>
+
+    <a href="/logout" class="text-sm text-red-600 hover:underline"> Logout </a>
+  </div>
+</div>

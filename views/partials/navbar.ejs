@@ -1,0 +1,52 @@
+<nav class="bg-white border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex h-16 items-center justify-between">
+      <!-- Left -->
+      <div class="flex items-center space-x-6">
+        <a href="/" class="text-xl font-bold text-gray-800"> SoleTraders </a>
+        <a
+          href="/directory"
+          class="text-gray-600 hover:text-gray-900 transition"
+        >
+          Directory
+        </a>
+      </div>
+
+      <!-- Right -->
+      <div class="flex items-center space-x-4">
+        <% if (trader) { %>
+        <span class="text-gray-700 text-sm">
+          Hello, <span class="font-semibold"><%= trader.name %></span>
+        </span>
+
+        <a
+          href="/traders/profile"
+          class="text-gray-600 hover:text-gray-900 transition"
+        >
+          Profile
+        </a>
+
+        <form action="/logout" method="POST">
+          <button
+            type="submit"
+            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
+          >
+            Logout
+          </button>
+        </form>
+        <% } else { %>
+        <a href="/login" class="text-gray-600 hover:text-gray-900 transition">
+          Login
+        </a>
+
+        <a
+          href="/register"
+          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+        >
+          Register
+        </a>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>

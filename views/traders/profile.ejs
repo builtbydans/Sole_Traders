@@ -1,0 +1,189 @@
+<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
+  <h1 class="text-2xl font-bold mb-6">Your Profile</h1>
+
+  <% if (profile) { %>
+
+  <!-- TRADE TYPE -->
+  <div class="mb-6">
+    <div class="flex justify-between items-center mb-1">
+      <p class="font-semibold">Trade Type</p>
+      <button
+        type="button"
+        onclick="toggleEdit('trade-type')"
+        class="text-gray-500 hover:text-black"
+      >
+        ✏️
+      </button>
+    </div>
+
+    <p id="trade-type-view"><%= profile.trade_type %></p>
+
+    <form
+      id="trade-type-edit"
+      class="hidden mt-2"
+      action="/traders/profile/trade-type"
+      method="POST"
+    >
+      <input
+        type="text"
+        name="tradeType"
+        class="border p-2 w-full rounded"
+        value="<%= profile.trade_type %>"
+      />
+
+      <div class="mt-2 flex gap-2">
+        <button class="bg-black text-white px-3 py-1 rounded">Save</button>
+        <button
+          type="button"
+          onclick="toggleEdit('trade-type')"
+          class="text-sm"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- REGION -->
+  <div class="mb-6">
+    <div class="flex justify-between items-center mb-1">
+      <p class="font-semibold">Region</p>
+      <button
+        type="button"
+        onclick="toggleEdit('region')"
+        class="text-gray-500 hover:text-black"
+      >
+        ✏️
+      </button>
+    </div>
+
+    <p id="region-view"><%= profile.region %></p>
+
+    <form
+      id="region-edit"
+      class="hidden mt-2"
+      action="/traders/profile/region"
+      method="POST"
+    >
+      <input
+        type="text"
+        name="region"
+        class="border p-2 w-full rounded"
+        value="<%= profile.region %>"
+      />
+
+      <div class="mt-2 flex gap-2">
+        <button class="bg-black text-white px-3 py-1 rounded">Save</button>
+        <button type="button" onclick="toggleEdit('region')" class="text-sm">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- AVAILABILITY -->
+  <div class="mb-6">
+    <div class="flex justify-between items-center mb-1">
+      <p class="font-semibold">Availability</p>
+      <button
+        type="button"
+        onclick="toggleEdit('availability')"
+        class="text-gray-500 hover:text-black"
+      >
+        ✏️
+      </button>
+    </div>
+
+    <p id="availability-view"><%= profile.availability %></p>
+
+    <form
+      id="availability-edit"
+      class="hidden mt-2"
+      action="/traders/profile/availability"
+      method="POST"
+    >
+      <input
+        type="text"
+        name="availability"
+        class="border p-2 w-full rounded"
+        value="<%= profile.availability %>"
+      />
+
+      <div class="mt-2 flex gap-2">
+        <button class="bg-black text-white px-3 py-1 rounded">Save</button>
+        <button
+          type="button"
+          onclick="toggleEdit('availability')"
+          class="text-sm"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- BIO -->
+  <div class="mb-6">
+    <div class="flex justify-between items-center mb-1">
+      <p class="font-semibold">Bio</p>
+      <button
+        type="button"
+        onclick="toggleEdit('bio')"
+        class="text-gray-500 hover:text-black"
+      >
+        ✏️
+      </button>
+    </div>
+
+    <p id="bio-view"><%= profile.bio %></p>
+
+    <form
+      id="bio-edit"
+      class="hidden mt-2"
+      action="/traders/profile/bio"
+      method="POST"
+    >
+      <textarea name="bio" rows="4" class="border p-2 w-full rounded">
+<%= profile.bio %></textarea
+      >
+
+      <div class="mt-2 flex gap-2">
+        <button class="bg-black text-white px-3 py-1 rounded">Save</button>
+        <button type="button" onclick="toggleEdit('bio')" class="text-sm">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <% } else { %>
+
+  <p class="mb-4">You haven’t created a profile yet.</p>
+
+  <a
+    href="/traders/profile/create"
+    class="inline-block bg-black text-white px-4 py-2 rounded"
+  >
+    Create your profile
+  </a>
+
+  <% } %>
+
+  <div class="mt-6">
+    <a href="/traders/dashboard" class="text-sm text-gray-600 hover:underline">
+      ← Back to Dashboard
+    </a>
+  </div>
+</div>
+
+<script>
+  function toggleEdit(field) {
+    const view = document.getElementById(`${field}-view`);
+    const edit = document.getElementById(`${field}-edit`);
+
+    if (!view || !edit) return;
+
+    view.classList.toggle("hidden");
+    edit.classList.toggle("hidden");
+  }
+</script>

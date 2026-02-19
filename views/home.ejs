@@ -1,14 +1,122 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Sole Traders</title>
-  </head>
-  <body>
-    <h1>Sole Traders App</h1>
-    <p>EJS is working.</p>
-    <p>You are currently in the views/home file</p>
-    <a href="/directory">
-      <button>Directory</button>
+<div class="max-w-5xl mx-auto space-y-10">
+      <% if (loggedOut) { %>
+      <div class="max-w-5xl mx-auto mb-6 p-4 rounded bg-green-100 text-green-800 text-sm text-center">
+        You have successfully logged out.
+      </div>
+    <% } %>
+  <!-- HERO -->
+  <section class="bg-white p-8 rounded-lg shadow text-center">
+    <h1 class="text-3xl font-bold mb-4">Sole Traders App</h1>
+
+    <% if (trader) { %>
+    <p class="text-lg">
+      Welcome back,
+      <span class="font-semibold"><%= trader.name %></span>
+    </p>
+    <% } else { %>
+    <p class="text-lg text-gray-700">
+      Find trusted local sole traders near you.
+    </p>
+    <a
+      href="/login"
+      class="inline-block mt-4 bg-black text-white px-5 py-2 rounded hover:bg-gray-800 transition"
+    >
+      Trader Login
     </a>
-  </body>
-</html>
+    <% } %>
+  </section>
+
+  <!-- PUBLIC DIRECTORY -->
+  <section>
+    <h2 class="text-2xl font-bold mb-6">Public Directory</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- FAKE TRADER CARD -->
+      <div class="bg-white p-5 rounded-lg shadow">
+        <h3 class="font-semibold text-lg">Brian Batunde</h3>
+        <p class="text-sm text-gray-600">Electrician</p>
+        <p class="text-sm">London</p>
+        <a
+          href="#"
+          class="text-sm text-black font-medium hover:underline mt-2 inline-block"
+        >
+          View profile
+        </a>
+      </div>
+
+      <div class="bg-white p-5 rounded-lg shadow">
+        <h3 class="font-semibold text-lg">Bob Dyland</h3>
+        <p class="text-sm text-gray-600">Plumber</p>
+        <p class="text-sm">Manchester</p>
+        <a
+          href="#"
+          class="text-sm text-black font-medium hover:underline mt-2 inline-block"
+        >
+          View profile
+        </a>
+      </div>
+
+      <div class="bg-white p-5 rounded-lg shadow">
+        <h3 class="font-semibold text-lg">Lisa Simpson</h3>
+        <p class="text-sm text-gray-600">Piano Tutor</p>
+        <p class="text-sm">Bristol</p>
+        <a
+          href="#"
+          class="text-sm text-black font-medium hover:underline mt-2 inline-block"
+        >
+          View profile
+        </a>
+      </div>
+
+      <div class="bg-white p-5 rounded-lg shadow">
+        <h3 class="font-semibold text-lg">Ahmed Khan</h3>
+        <p class="text-sm text-gray-600">Carpenter</p>
+        <p class="text-sm">Leeds</p>
+        <a
+          href="#"
+          class="text-sm text-black font-medium hover:underline mt-2 inline-block"
+        >
+          View profile
+        </a>
+      </div>
+
+      <div class="bg-white p-5 rounded-lg shadow">
+        <h3 class="font-semibold text-lg">Sarah Williams</h3>
+        <p class="text-sm text-gray-600">Hair Stylist</p>
+        <p class="text-sm">Birmingham</p>
+        <a
+          href="#"
+          class="text-sm text-black font-medium hover:underline mt-2 inline-block"
+        >
+          View profile
+        </a>
+      </div>
+
+      <div class="bg-white p-5 rounded-lg shadow">
+        <h3 class="font-semibold text-lg">Tom O'Neill</h3>
+        <p class="text-sm text-gray-600">Personal Trainer</p>
+        <p class="text-sm">Nottingham</p>
+        <a
+          href="#"
+          class="text-sm text-black font-medium hover:underline mt-2 inline-block"
+        >
+          View profile
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-gray-50 p-8 rounded-lg text-center">
+    <h2 class="text-xl font-semibold mb-2">Are you a sole trader?</h2>
+    <p class="text-gray-600 mb-4">
+      Join the platform and get discovered by local customers.
+    </p>
+    <a
+      href="/register"
+      class="inline-block bg-black text-white px-6 py-2 rounded hover:bg-gray-800 transition"
+    >
+      Register as a Trader
+    </a>
+  </section>
+</div>

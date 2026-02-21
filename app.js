@@ -7,6 +7,7 @@ const session = require("express-session");
 const indexRoutes = require("./routes/index");
 const authRoutes = require("./routes/auth");
 const traderRoutes = require("./routes/traders");
+const serviceRoutes = require("./routes/services");
 
 const db = require("./db/connection");
 
@@ -28,7 +29,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 
 // Flash for Registration/Login err
@@ -54,6 +55,7 @@ app.use(async (req, res, next) => {
 app.use("/", indexRoutes);
 app.use("/", authRoutes);
 app.use("/traders", traderRoutes);
+app.use("/", serviceRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

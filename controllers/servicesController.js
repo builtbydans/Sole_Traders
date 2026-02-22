@@ -1,5 +1,24 @@
 const db = require("../db/connection");
 
+exports.getAllServices = async (req, res) => {
+  const traderId = req.session.traderId;
+
+  if (!traderId) {
+    return res.redirect("/login");
+  }
+
+  try {
+    const [results] = await db.query(
+      "SELECT * FROM services WHERE trader_id = ?",
+      [traderId],
+    );
+
+    res.render("services/index", { services: results });
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+};
+
 exports.showNewForm = (req, res) => {
   const flash = req.session.flash || null;
   res.render("services/new", { title: "Add Service", flash });

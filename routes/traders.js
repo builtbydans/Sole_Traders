@@ -10,12 +10,11 @@ router.use(requireAuth);
 router.get("/dashboard", traderController.dashboard);
 router.get("/profile", traderProfileController.profile);
 
-router.post("/profile/trade-type", traderProfileController.updateTradeType);
-router.post(
-  "/profile/region",
+router.get("/profile/create", traderProfileController.getCreateProfilePage);
+router.post("/profile/create", traderProfileController.createProfile);
 
-  traderProfileController.updateRegion,
-);
+router.post("/profile/trade-type", traderProfileController.updateTradeType);
+router.post("/profile/region", traderProfileController.updateRegion);
 router.post(
   "/profile/availability",
   traderProfileController.updateAvailability,

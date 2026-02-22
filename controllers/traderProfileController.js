@@ -1,11 +1,17 @@
 const db = require("../db/connection");
 
+exports.getCreateProfilePage = (req, res) => {
+  res.render("traders/createProfile", {
+    title: "Create Your Profile",
+  });
+};
+
 exports.profile = async (req, res) => {
   const traderId = req.session.traderId;
 
   const [rows] = await db.query(
     "SELECT trade_type, region, availability, bio FROM trader_profiles WHERE trader_id = ?",
-    [traderId]
+    [traderId],
   );
 
   const profile = rows.length > 0 ? rows[0] : null;
@@ -14,6 +20,44 @@ exports.profile = async (req, res) => {
     title: "Your Profile",
     profile,
   });
+};
+
+exports.createProfile = async (req, res) => {
+  const traderId = req.session.traderId;
+  if (!traderId) return res.redirect("/login");
+
+  let { tradeType, region, availability, bio } = req.body;
+
+  tradeType = tradeType?.trim();
+  region = region.trim();
+  availability = availability.trim();
+  bio = bio.trim();
+
+  if (!tradeType || !region || !availability || !bio) {
+    req.session.flash = { message: "All fields are required." };
+    return res.redirect("/traders/profile/create");
+  }
+
+  try {
+    await db.query(
+      `INSERT INTO trader_profiles (trader_id, trade_type, region, availability, bio)
+      VALUES (?, ?, ?, ?, ?)`,
+      [traderId, tradeType, region, availability, bio],
+    );
+
+    req.session.flash = {
+      type: "success",
+      message: "Profile created successfully",
+    };
+    return res.redirect("/traders/profile");
+  } catch (err) {
+    console.log(err);
+    req.session.flash = {
+      type: "error",
+      message: "Something went wrong when trying to create your profile",
+    };
+    return res.redirect("/traders/profile/create");
+  }
 };
 
 exports.updateTradeType = async (req, res) => {
@@ -26,7 +70,7 @@ exports.updateTradeType = async (req, res) => {
 
   await db.query(
     "UPDATE trader_profiles SET trade_type = ? WHERE trader_id = ?",
-    [tradeType, traderId]
+    [tradeType, traderId],
   );
 
   res.redirect("/traders/profile");
@@ -58,7 +102,7 @@ exports.updateAvailability = async (req, res) => {
 
   await db.query(
     "UPDATE trader_profiles SET availability = ? WHERE trader_id = ?",
-    [availability, traderId]
+    [availability, traderId],
   );
 
   res.redirect("/traders/profile");

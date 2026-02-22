@@ -40,12 +40,24 @@ app.use((req, res, next) => {
 
 // ✅ GLOBAL navbar data — MUST BE BEFORE ROUTES
 app.use(async (req, res, next) => {
-  if (req.session.traderId) {
-    const [rows] = await db.query("SELECT id, name FROM traders WHERE id = ?", [
-      req.session.traderId,
-    ]);
-    res.locals.trader = rows[0];
-  } else {
+  try {
+    if (req.session.traderId) {
+      const [rows] = await db.query(
+        "SELECT id, name FROM traders WHERE id = ?",
+        [req.session.traderId],
+      );
+      const trader = rows[0];
+
+      if (trader && trader.name) {
+        trader.name =
+          trader.name.charAt(0).toUpperCase() + trader.name.slice(1);
+      }
+      res.locals.trader = trader;
+    } else {
+      res.locals.trader = null;
+    }
+  } catch (error) {
+    console.error("Session Middleware Error:", error);
     res.locals.trader = null;
   }
   next();

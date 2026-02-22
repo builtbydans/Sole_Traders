@@ -32,8 +32,12 @@ exports.renderLogin = (req, res) => {
 exports.register = async (req, res) => {
   let { name, username, email, password } = req.body;
 
-  // Trim inputs
-  name = name?.trim();
+  // trim and force name to be pushed in uppercase
+  if (name) {
+    name = name?.trim();
+    name = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  }
+
   username = username?.trim();
   email = email?.trim();
 
@@ -72,6 +76,12 @@ exports.register = async (req, res) => {
     res.redirect("/login");
   } catch (err) {
     console.error(err);
+    if (err.code === "ER_DUP_ENTRY") {
+      req.session.flash = {
+        message: "That email or username is already taken.",
+      };
+      return res.redirect("/register");
+    }
     res.status(500).send("Server error");
   }
 };

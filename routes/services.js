@@ -6,6 +6,9 @@ const servicesController = require("../controllers/servicesController");
 
 router.use(requireAuth);
 
+router.get("/services", servicesController.getAllServices);
+
+// new service form
 router.get("/services/new", servicesController.showNewForm);
 router.post("/services", servicesController.addService);
 

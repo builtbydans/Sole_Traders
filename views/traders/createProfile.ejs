@@ -1,0 +1,84 @@
+<div class="max-w-2xl mx-auto bg-white p-8 rounded-lg shadow">
+  <h1 class="text-2xl font-bold mb-6"><%= title %></h1>
+
+  <% if (flash && flash.message) { %>
+  <div class="mb-4 p-3 rounded text-sm
+    <%= flash.type === 'success'
+      ? 'bg-green-100 text-green-700'
+      : 'bg-red-100 text-red-700' %>">
+    <%= flash.message %>
+  </div>
+<% } %>
+
+  <form action="/traders/profile/create" method="POST" class="space-y-6">
+
+    <!-- Title -->
+    <div>
+      <label for="tradeType" class="block text-sm font-medium text-gray-700">
+        Trade Type
+      </label>
+      <input
+        type="text"
+        name="tradeType"
+        id="tradeType"
+        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+        required
+      />
+    </div>
+
+    <!-- Description -->
+    <div>
+      <label for="region" class="block text-sm font-medium text-gray-700">
+        Region
+      </label>
+      <textarea
+        name="region"
+        id="region"
+        rows="4"
+        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+        required
+      ></textarea>
+    </div>
+
+    <!-- Pricing Type -->
+    <div>
+      <label for="availability" class="block text-sm font-medium text-gray-700">
+        Availability
+      </label>
+      <select
+        name="availability"
+        id="availability"
+        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+        required
+      >
+        <option value="hourly">Hourly</option>
+        <option value="fixed">Fixed</option>
+      </select>
+    </div>
+
+    <!-- Base Price -->
+    <div>
+      <label for="bio" class="block text-sm font-medium text-gray-700">
+        Bio
+      </label>
+      <input
+        type="text"
+        name="bio"
+        id="bio"
+        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring focus:ring-blue-200"
+        required
+      />
+    </div>
+
+    <!-- Submit -->
+    <div>
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+      >
+        Save Profile
+      </button>
+    </div>
+
+  </form>
+</div>

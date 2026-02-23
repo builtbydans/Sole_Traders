@@ -4,10 +4,11 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 
-const indexRoutes = require("./routes/index");
-const authRoutes = require("./routes/auth");
-const traderRoutes = require("./routes/traders");
-const serviceRoutes = require("./routes/services");
+const indexRoutes = require("./routes/indexRoutes");
+const authRoutes = require("./routes/authRoutes");
+const traderRoutes = require("./routes/tradersRoutes");
+const serviceRoutes = require("./routes/servicesRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 
 const db = require("./db/connection");
 
@@ -67,7 +68,8 @@ app.use(async (req, res, next) => {
 app.use("/", indexRoutes);
 app.use("/", authRoutes);
 app.use("/traders", traderRoutes);
-app.use("/", serviceRoutes);
+app.use("/traders/profile", profileRoutes);
+app.use("/services", serviceRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

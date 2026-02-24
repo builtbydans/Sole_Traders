@@ -2,15 +2,15 @@ const express = require("express");
 const router = express.Router();
 const requireAuth = require("../middleware/requireAuth");
 
-const profileController = require("../controllers/profileController");
+const profilesController = require("../controllers/profilesController");
 
 router.use(requireAuth);
 
-router.get("/", profileController.profile);
+router.get("/", profilesController.profile);
 
-router.get("/create", profileController.getCreateProfilePage);
-router.post("/create", profileController.createProfile);
+router.get("/create", profilesController.getCreateProfilePage);
+router.post("/create", profilesController.createProfile);
 
-router.post("/", profileController.updateProfile);
+router.post("/", profilesController.updateProfile);
 
 module.exports = router;

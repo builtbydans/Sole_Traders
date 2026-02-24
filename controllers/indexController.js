@@ -1,22 +1,23 @@
-const db = require("../db/connection");
+const indexModel = require("../models/indexModel");
 
 exports.renderHome = async (req, res) => {
   let trader = null;
   const loggedOut = req.query.loggedOut === "true";
 
-  if (req.session.traderId) {
-    const [rows] = await db.query("SELECT name FROM traders WHERE id = ?", [
-      req.session.traderId,
-    ]);
+  try {
+    if (req.session.traderId) {
+      trader = await indexModel.getTraderNameById(req.session.traderId);
+    }
 
-    trader = rows[0];
+    res.render("home", {
+      title: "Home",
+      trader,
+      loggedOut,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error loading home page");
   }
-
-  res.render("home", {
-    title: "Home",
-    trader,
-    loggedOut,
-  });
 };
 
 exports.renderDirectory = (req, res) => {

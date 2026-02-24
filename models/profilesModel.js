@@ -11,13 +11,18 @@ exports.getProfileByTraderId = async (traderId) => {
   return rows[0] || null;
 };
 
-exports.createProfile = async (
-  traderId,
-  tradeType,
-  region,
-  availability,
-  bio,
-) => {
+exports.createProfile = async (traderId, data) => {
+  let { tradeType, region, availability, bio } = data;
+
+  tradeType = tradeType?.trim();
+  region = region?.trim();
+  availability = availability?.trim();
+  bio = bio?.trim();
+
+  if (!tradeType || !region || !availability || !bio) {
+    throw new Error("All fields requried");
+  }
+
   return db.query(
     `INSERT INTO trader_profiles
      (trader_id, trade_type, region, availability, bio)

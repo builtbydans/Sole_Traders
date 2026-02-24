@@ -1,4 +1,4 @@
-const profileModel = require("../models/profileModel");
+const profilesModel = require("../models/profilesModel");
 
 // Render create profile page
 exports.getCreateProfilePage = (req, res) => {
@@ -16,7 +16,7 @@ exports.profile = async (req, res) => {
   }
 
   try {
-    const profile = await profileModel.getProfileByTraderId(traderId);
+    const profile = await profilesModel.getProfileByTraderId(traderId);
 
     res.render("traders/profile", {
       title: "Your Profile",
@@ -38,29 +38,8 @@ exports.createProfile = async (req, res) => {
     return res.redirect("/login");
   }
 
-  let { tradeType, region, availability, bio } = req.body;
-
-  tradeType = tradeType?.trim();
-  region = region?.trim();
-  availability = availability?.trim();
-  bio = bio?.trim();
-
-  if (!tradeType || !region || !availability || !bio) {
-    req.session.flash = {
-      type: "error",
-      message: "All fields are required.",
-    };
-    return res.redirect("/traders/profile/create");
-  }
-
   try {
-    await profileModel.createProfile(
-      traderId,
-      tradeType,
-      region,
-      availability,
-      bio,
-    );
+    await profilesModel.createProfile(traderId, req.body);
 
     req.session.flash = {
       type: "success",
@@ -73,7 +52,8 @@ exports.createProfile = async (req, res) => {
 
     req.session.flash = {
       type: "error",
-      message: "Something went wrong while creating your profile",
+      message:
+        err.message || "Something went wrong while creating your profile",
     };
 
     return res.redirect("/traders/profile/create");
@@ -99,7 +79,7 @@ exports.updateProfile = async (req, res) => {
     return res.redirect("/traders/profile");
   }
 
-  await profileModel.updateProfile(traderId, filteredUpdates);
+  await profilesModel.updateProfile(traderId, filteredUpdates);
 
   res.redirect("/traders/profile");
 };

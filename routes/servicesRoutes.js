@@ -6,10 +6,10 @@ const servicesController = require("../controllers/servicesController");
 
 router.use(requireAuth);
 
-router.get("/services", servicesController.getAllServices);
+router.get("/", servicesController.getAllServices);
 
 // new service form
-router.get("/services/new", servicesController.showNewForm);
-router.post("/services", servicesController.addService);
+router.get("/new", servicesController.showNewForm);
+router.post("/", servicesController.addService);
 
 module.exports = router;

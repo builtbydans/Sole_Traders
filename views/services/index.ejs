@@ -1,4 +1,4 @@
-<h1 class="text-3xl font-bold mb-8">Our Services</h1>
+<h1 class="text-3xl font-bold mb-8">Your Services</h1>
 
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
   <% if (services.length === 0) { %>
@@ -9,14 +9,22 @@
   <% } else { %>
     <% services.forEach(service => { %>
       <div class="border rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow bg-white">
-        <h3 class="text-xl font-semibold text-blue-600"><%= service.title %></h3>
+        <div class="flex justify-between">
+            <h3 class="text-xl font-semibold text-blue-600"><%= service.title %></h3>
+            <a href="/services/<%= service.id %>/edit"
+               class="text-gray-500 hover:text-black"
+            >
+              ✏️
+            </a>
+        </div>
         <p class="text-gray-600 my-2"><%= service.description %></p>
-        
+
         <div class="mt-4 border-t pt-2">
           <p class="text-sm font-medium text-gray-500 uppercase"><%= service.pricing_type %></p>
           <p class="text-lg font-bold">£<%= service.base_price %></p>
         </div>
       </div>
+
     <% }); %>
   <% } %>
 </div>

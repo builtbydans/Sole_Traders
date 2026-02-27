@@ -30,3 +30,30 @@ exports.addService = async (traderId, data) => {
     [traderId, title, description, pricingType, basePrice],
   );
 };
+
+exports.getServiceById = async (serviceId) => {
+  const [rows] = await db.query(
+    "SELECT * FROM services WHERE id = ?",
+    [serviceId]
+  );
+
+  return rows[0];
+};
+
+exports.updateServiceById = async (
+  serviceId,
+  traderId,
+  title,
+  description,
+  pricing_type,
+  base_price
+) => {
+  const [result] = await db.query(
+    `UPDATE services
+     SET title = ?, description = ?, pricing_type = ?, base_price = ?
+     WHERE id = ? AND trader_id = ?`,
+    [title, description, pricing_type, base_price, serviceId, traderId]
+  );
+
+  return result;
+};

@@ -12,4 +12,8 @@ router.get("/", servicesController.getAllServices);
 router.get("/new", servicesController.showNewForm);
 router.post("/", servicesController.addService);
 
+// edit form
+router.get("/:id/edit", requireAuth, servicesController.showEditForm);
+router.post("/:id", requireAuth, servicesController.updateService);
+
 module.exports = router;

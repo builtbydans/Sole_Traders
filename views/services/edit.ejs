@@ -1,0 +1,7 @@
+<form action="/services/<%= service.id %>" method="POST">
+  <input name="title" value="<%= service.title %>" />
+  <textarea name="description"><%= service.description %></textarea>
+  <input name="pricing_type" value="<%= service.pricing_type %>" />
+  <input name="base_price" value="<%= service.base_price %>" />
+  <button type="submit">Save</button>
+</form>

@@ -8,26 +8,19 @@ exports.getCreateProfilePage = (req, res) => {
 };
 
 // View profile
-exports.profile = async (req, res) => {
+exports.renderProfile = async (req, res) => {
   const traderId = req.session.traderId;
 
-  if (!traderId) {
-    return res.redirect("/login");
-  }
+  if (!traderId) return res.redirect("/login");
 
-  try {
-    const profile = await profilesModel.getProfileByTraderId(traderId);
+  const profile = await profilesModel.getProfileByTraderId(traderId);
 
-    res.render("traders/profile", {
-      title: "Your Profile",
-      profile,
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).render("error", {
-      message: "Unable to load profile",
-    });
-  }
+  res.render("traders/profile", {
+    title: "Your Profile",
+    profile,
+    isOwner: true,
+    loggedInTraderId: traderId
+  });
 };
 
 // Create profile

@@ -6,7 +6,7 @@ const profilesController = require("../controllers/profilesController");
 
 router.use(requireAuth);
 
-router.get("/", profilesController.profile);
+router.get("/", profilesController.renderProfile);
 
 router.get("/create", profilesController.getCreateProfilePage);
 router.post("/create", profilesController.createProfile);

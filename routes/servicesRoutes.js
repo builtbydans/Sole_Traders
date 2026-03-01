@@ -13,7 +13,10 @@ router.get("/new", servicesController.showNewForm);
 router.post("/", servicesController.addService);
 
 // edit form
-router.get("/:id/edit", requireAuth, servicesController.showEditForm);
-router.post("/:id", requireAuth, servicesController.updateService);
+router.get("/:id/edit", servicesController.showEditForm);
+router.post("/:id", servicesController.updateService);
+
+// delete form
+
 
 module.exports = router;

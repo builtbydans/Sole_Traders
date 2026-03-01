@@ -1,5 +1,8 @@
 <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
-  <h1 class="text-2xl font-bold mb-6">Your Profile</h1>
+
+  <h1 class="text-2xl font-bold mb-6">
+    <%= isOwner ? "Your Profile" : profile.name + "'s Profile" %>
+  </h1>
 
   <% if (profile) { %>
 
@@ -7,17 +10,21 @@
   <div class="mb-6">
     <div class="flex justify-between items-center mb-1">
       <p class="font-semibold">Trade Type</p>
-      <button
-        type="button"
-        onclick="toggleEdit('trade-type')"
-        class="text-gray-500 hover:text-black"
-      >
-        ✏️
-      </button>
+
+      <% if (isOwner) { %>
+        <button
+          type="button"
+          onclick="toggleEdit('trade-type')"
+          class="text-gray-500 hover:text-black"
+        >
+          ✏️
+        </button>
+      <% } %>
     </div>
 
     <p id="trade-type-view"><%= profile.trade_type %></p>
 
+    <% if (isOwner) { %>
     <form
       id="trade-type-edit"
       class="hidden mt-2"
@@ -33,32 +40,33 @@
 
       <div class="mt-2 flex gap-2">
         <button class="bg-black text-white px-3 py-1 rounded">Save</button>
-        <button
-          type="button"
-          onclick="toggleEdit('trade-type')"
-          class="text-sm"
-        >
+        <button type="button" onclick="toggleEdit('trade-type')" class="text-sm">
           Cancel
         </button>
       </div>
     </form>
+    <% } %>
   </div>
 
   <!-- REGION -->
   <div class="mb-6">
     <div class="flex justify-between items-center mb-1">
       <p class="font-semibold">Region</p>
-      <button
-        type="button"
-        onclick="toggleEdit('region')"
-        class="text-gray-500 hover:text-black"
-      >
-        ✏️
-      </button>
+
+      <% if (isOwner) { %>
+        <button
+          type="button"
+          onclick="toggleEdit('region')"
+          class="text-gray-500 hover:text-black"
+        >
+          ✏️
+        </button>
+      <% } %>
     </div>
 
     <p id="region-view"><%= profile.region %></p>
 
+    <% if (isOwner) { %>
     <form
       id="region-edit"
       class="hidden mt-2"
@@ -79,23 +87,28 @@
         </button>
       </div>
     </form>
+    <% } %>
   </div>
 
   <!-- AVAILABILITY -->
   <div class="mb-6">
     <div class="flex justify-between items-center mb-1">
       <p class="font-semibold">Availability</p>
-      <button
-        type="button"
-        onclick="toggleEdit('availability')"
-        class="text-gray-500 hover:text-black"
-      >
-        ✏️
-      </button>
+
+      <% if (isOwner) { %>
+        <button
+          type="button"
+          onclick="toggleEdit('availability')"
+          class="text-gray-500 hover:text-black"
+        >
+          ✏️
+        </button>
+      <% } %>
     </div>
 
     <p id="availability-view"><%= profile.availability %></p>
 
+    <% if (isOwner) { %>
     <form
       id="availability-edit"
       class="hidden mt-2"
@@ -111,32 +124,33 @@
 
       <div class="mt-2 flex gap-2">
         <button class="bg-black text-white px-3 py-1 rounded">Save</button>
-        <button
-          type="button"
-          onclick="toggleEdit('availability')"
-          class="text-sm"
-        >
+        <button type="button" onclick="toggleEdit('availability')" class="text-sm">
           Cancel
         </button>
       </div>
     </form>
+    <% } %>
   </div>
 
   <!-- BIO -->
   <div class="mb-6">
     <div class="flex justify-between items-center mb-1">
       <p class="font-semibold">Bio</p>
-      <button
-        type="button"
-        onclick="toggleEdit('bio')"
-        class="text-gray-500 hover:text-black"
-      >
-        ✏️
-      </button>
+
+      <% if (isOwner) { %>
+        <button
+          type="button"
+          onclick="toggleEdit('bio')"
+          class="text-gray-500 hover:text-black"
+        >
+          ✏️
+        </button>
+      <% } %>
     </div>
 
     <p id="bio-view"><%= profile.bio %></p>
 
+    <% if (isOwner) { %>
     <form
       id="bio-edit"
       class="hidden mt-2"
@@ -144,8 +158,7 @@
       method="POST"
     >
       <textarea name="bio" rows="4" class="border p-2 w-full rounded">
-<%= profile.bio %></textarea
-      >
+<%= profile.bio %></textarea>
 
       <div class="mt-2 flex gap-2">
         <button class="bg-black text-white px-3 py-1 rounded">Save</button>
@@ -154,18 +167,22 @@
         </button>
       </div>
     </form>
+    <% } %>
   </div>
 
   <% } else { %>
 
-  <p class="mb-4">You haven’t created a profile yet.</p>
-
-  <a
-    href="/traders/profile/create"
-    class="inline-block bg-black text-white px-4 py-2 rounded"
-  >
-    Create your profile
-  </a>
+    <% if (isOwner) { %>
+      <p class="mb-4">You haven’t created a profile yet.</p>
+      <a
+        href="/traders/profile/create"
+        class="inline-block bg-black text-white px-4 py-2 rounded"
+      >
+        Create your profile
+      </a>
+    <% } else { %>
+      <p>This trader has not created a profile yet.</p>
+    <% } %>
 
   <% } %>
 
@@ -180,9 +197,7 @@
   function toggleEdit(field) {
     const view = document.getElementById(`${field}-view`);
     const edit = document.getElementById(`${field}-edit`);
-
     if (!view || !edit) return;
-
     view.classList.toggle("hidden");
     edit.classList.toggle("hidden");
   }

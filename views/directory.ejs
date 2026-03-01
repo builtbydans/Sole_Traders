@@ -1,7 +1,45 @@
 <div class="max-w-5xl mx-auto space-y-10">
   <!-- HERO -->
-  <section class="bg-white p-8 rounded-lg shadow text-center">
-    <h1 class="text-3xl font-bold mb-4">Public Directory</h1>
+    <section class="bg-white p-8 rounded-lg shadow">
+      <h1 class="text-3xl font-bold mb-4">Public Directory</h1>
+
+  <% if (result.length === 0) { %>
+    <p class="text-center text-gray-500">No traders found.</p>
+  <% } else { %>
+    <ul class="space-y-4">
+       <div class="flex justify-between">
+         <span class="text-sm">
+            Name
+          </span>
+          <span class="text-sm">
+            Trade Type
+          </span>
+          <span class="text-sm">
+            Region
+          </span>
+       </div>
+      <% result.forEach(profile => { %>
+        <li class="border rounded-lg p-2 hover:shadow-md transition-shadow">
+           <a href="/directory/profile/<%= profile.id %>"
+        class="block"
+      >
+          <div class="flex justify-between items-center">
+            <span class="text-lg font-semibold text-blue-600">
+              <%= profile.name %>
+            </span>
+            <span class="text-sm text-gray-500">
+              <%= profile.trade_type %>
+            </span>
+            <span class="text-sm text-gray-500">
+              <%= profile.region %>
+            </span>
+          </div>
+          </a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+</section>
 
     <% if (trader) { %>
     <p class="text-lg">
@@ -15,9 +53,7 @@
       Logout
     </a>
     <% } else { %>
-    <p class="text-lg text-gray-700">
-      You are on the Directory Page!
-    </p>
+
     <a
       href="/login"
       class="inline-block mt-4 bg-black text-white px-5 py-2 rounded hover:bg-gray-800 transition"
@@ -27,7 +63,7 @@
     <% } %>
   </section>
 
-  
+
   <!-- CTA -->
   <section class="bg-gray-50 p-8 rounded-lg text-center">
     <h2 class="text-xl font-semibold mb-2">Are you a sole trader?</h2>

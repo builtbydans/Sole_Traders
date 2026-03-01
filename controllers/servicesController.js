@@ -86,3 +86,16 @@ exports.updateService = async (req, res) => {
 
   res.redirect("/services");
 };
+
+exports.deleteService = async (req, res) => {
+  const serviceId = req.params.id;
+  const traderId = req.session.traderId;
+
+  const result = await servicesModel.deleteServiceById(serviceId, traderId)
+
+  if (result.affectedRows === 0) {
+    return res.status(403).send("Not authorised")
+  }
+
+  res.redirect("/services");
+}

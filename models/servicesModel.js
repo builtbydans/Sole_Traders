@@ -57,3 +57,10 @@ exports.updateServiceById = async (
 
   return result;
 };
+
+exports.deleteServiceById = async (serviceId, traderId) => {
+  const [result] = await db.query(
+    `DELETE FROM services WHERE id = ? AND trader_id = ?`, [serviceId, traderId]
+  )
+  return result;
+}

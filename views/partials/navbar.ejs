@@ -4,12 +4,21 @@
       <!-- Left -->
       <div class="flex items-center space-x-6">
         <a href="/" class="text-xl font-bold text-gray-800"> SoleTraders </a>
+        <% if (trader) { %>
+            <a
+            href="/traders/dashboard"
+            class="text-gray-600 hover:text-gray-900 transition"
+          >
+            Trader Dashboard
+          </a>
+         <% } %>
         <a
           href="/directory"
           class="text-gray-600 hover:text-gray-900 transition"
         >
-          Directory
+          Public Directory
         </a>
+
       </div>
 
       <!-- Right -->

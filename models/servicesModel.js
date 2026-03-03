@@ -37,7 +37,7 @@ exports.getServiceById = async (serviceId) => {
     [serviceId]
   );
 
-  return rows[0];
+  return rows[0] || null;
 };
 
 exports.updateServiceById = async (

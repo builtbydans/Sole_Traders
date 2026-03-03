@@ -6,7 +6,7 @@ const authController = require("../controllers/authController");
 router.get("/", indexController.renderHome);
 
 router.get("/directory", indexController.renderDirectory);
-router.get("/directory/profile/:id", indexController.renderTraderProfile);
+router.get("/directory/profile/:id", indexController.renderPublicTraderProfile);
 
 router.get("/login", authController.renderLogin);
 router.get("/register", authController.renderRegister);

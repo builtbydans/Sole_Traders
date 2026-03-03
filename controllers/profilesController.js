@@ -14,10 +14,12 @@ exports.renderProfile = async (req, res) => {
   if (!traderId) return res.redirect("/login");
 
   const profile = await profilesModel.getProfileByTraderId(traderId);
+  const services = await profilesModel.getPublicTraderServicesById(traderId);
 
   res.render("traders/profile", {
     title: "Your Profile",
     profile,
+    services,
     isOwner: true,
     loggedInTraderId: traderId
   });

@@ -9,9 +9,24 @@ exports.getPublicDirectoryDetails = async () => {
   return rows;
 }
 
-exports.getTraderProfileById = async (id) => {
+exports.getPublicTraderServicesById = async (traderId) => {
   const [rows] = await db.query(
-    `
+    `SELECT
+        s.id,
+        s.title,
+        s.description,
+        s.pricing_type,
+        s.base_price
+     FROM services s
+     JOIN trader_profiles tp ON s.trader_id = tp.trader_id
+     WHERE s.trader_id = ?`,
+    [traderId]
+  );
+  return rows;
+}
+
+exports.getTraderProfileById = async (id) => {
+  const [rows] = await db.query(`
     SELECT tp.*, t.name
     FROM trader_profiles tp
     JOIN traders t ON tp.trader_id = t.id

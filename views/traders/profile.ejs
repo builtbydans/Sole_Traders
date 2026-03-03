@@ -1,196 +1,183 @@
-<div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-  <h1 class="text-2xl font-bold mb-6">
-    <%= isOwner ? "Your Profile" : profile.name + "'s Profile" %>
-  </h1>
+    <div class="lg:col-span-2 space-y-6">
+      <div class="bg-white p-6 rounded-lg shadow">
+        <h1 class="text-2xl font-bold">
+          <%= isOwner ? "Your Profile" : profile.name + "'s Profile" %>
+        </h1>
+        <% if (isOwner) { %>
+          <p class="text-sm text-gray-500 mt-1 mb-6">This is your public facing profile. You may edit your information here.</p>
+        <% } %>
 
-  <% if (profile) { %>
+        <% if (profile) { %>
+          <div class="mb-6">
+            <div class="flex justify-between items-center mb-1">
+              <p class="font-semibold">Trade Type</p>
+              <% if (isOwner) { %>
+                <button type="button" onclick="toggleEdit('trade-type')" class="text-gray-500 hover:text-black">✏️</button>
+              <% } %>
+            </div>
+            <p id="trade-type-view"><%= profile.trade_type %></p>
+            <% if (isOwner) { %>
+              <form id="trade-type-edit" class="hidden mt-2" action="/traders/profile" method="POST">
+                <input type="text" name="trade_type" class="border p-2 w-full rounded" value="<%= profile.trade_type %>" />
+                <div class="mt-2 flex gap-2">
+                  <button class="bg-black text-white px-3 py-1 rounded">Save</button>
+                  <button type="button" onclick="toggleEdit('trade-type')" class="text-sm">Cancel</button>
+                </div>
+              </form>
+            <% } %>
+          </div>
 
-  <!-- TRADE TYPE -->
-  <div class="mb-6">
-    <div class="flex justify-between items-center mb-1">
-      <p class="font-semibold">Trade Type</p>
+          <div class="mb-6">
+            <div class="flex justify-between items-center mb-1">
+              <p class="font-semibold">Region</p>
+              <% if (isOwner) { %>
+                <button type="button" onclick="toggleEdit('region')" class="text-gray-500 hover:text-black">✏️</button>
+              <% } %>
+            </div>
+            <p id="region-view"><%= profile.region %></p>
+            <% if (isOwner) { %>
+              <form id="region-edit" class="hidden mt-2" action="/traders/profile" method="POST">
+                <input type="text" name="region" class="border p-2 w-full rounded" value="<%= profile.region %>" />
+                <div class="mt-2 flex gap-2">
+                  <button class="bg-black text-white px-3 py-1 rounded">Save</button>
+                  <button type="button" onclick="toggleEdit('region')" class="text-sm">Cancel</button>
+                </div>
+              </form>
+            <% } %>
+          </div>
 
-      <% if (isOwner) { %>
-        <button
-          type="button"
-          onclick="toggleEdit('trade-type')"
-          class="text-gray-500 hover:text-black"
-        >
-          ✏️
-        </button>
-      <% } %>
+          <div class="mb-6">
+            <div class="flex justify-between items-center mb-1">
+              <p class="font-semibold">Availability</p>
+              <% if (isOwner) { %>
+                <button type="button" onclick="toggleEdit('availability')" class="text-gray-500 hover:text-black">✏️</button>
+              <% } %>
+            </div>
+            <p id="availability-view"><%= profile.availability %></p>
+            <% if (isOwner) { %>
+              <form id="availability-edit" class="hidden mt-2" action="/traders/profile" method="POST">
+                <input type="text" name="availability" class="border p-2 w-full rounded" value="<%= profile.availability %>" />
+                <div class="mt-2 flex gap-2">
+                  <button class="bg-black text-white px-3 py-1 rounded">Save</button>
+                  <button type="button" onclick="toggleEdit('availability')" class="text-sm">Cancel</button>
+                </div>
+              </form>
+            <% } %>
+          </div>
+
+          <div class="mb-6">
+            <div class="flex justify-between items-center mb-1">
+              <p class="font-semibold">Bio</p>
+              <% if (isOwner) { %>
+                <button type="button" onclick="toggleEdit('bio')" class="text-gray-500 hover:text-black">✏️</button>
+              <% } %>
+            </div>
+            <p id="bio-view"><%= profile.bio %></p>
+            <% if (isOwner) { %>
+              <form id="bio-edit" class="hidden mt-2" action="/traders/profile" method="POST">
+                <textarea name="bio" rows="4" class="border p-2 w-full rounded"><%= profile.bio %></textarea>
+                <div class="mt-2 flex gap-2">
+                  <button class="bg-black text-white px-3 py-1 rounded">Save</button>
+                  <button type="button" onclick="toggleEdit('bio')" class="text-sm">Cancel</button>
+                </div>
+              </form>
+            <% } %>
+          </div>
+        <% } else { %>
+          <div class="text-center py-10">
+            <% if (isOwner) { %>
+              <p class="mb-4 text-gray-600">You haven’t created a profile yet.</p>
+              <a href="/traders/profile/create" class="inline-block bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition">Create your profile</a>
+            <% } else { %>
+              <p class="text-gray-600">This trader has not created a profile yet.</p>
+            <% } %>
+          </div>
+        <% } %>
+
+        <hr class="my-8 border-gray-100">
+
+        <div class="services-section">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-bold text-gray-800">Services Offered</h2>
+          </div>
+
+          <% if (services.length > 0) { %>
+            <ul class="space-y-3 mb-4">
+              <% services.forEach(service => { %>
+                <li class="flex justify-between items-center p-3 bg-gray-50 rounded-md border border-gray-100">
+                  <span><%= service.title %> — <span class="font-semibold">£<%= service.base_price %></span></span>
+                </li>
+              <% }) %>
+            </ul>
+              <% if (isOwner) { %>
+                <a href="/services/" class="text-sm bg-black hover:bg-gray-900 text-white px-3 py-2 rounded transition">Add or Amend Services</a>
+            <% } %>
+          <% } else { %>
+            <p class="text-gray-500 italic">No services listed yet.</p>
+          <% } %>
+        </div>
+
+        <div class="mt-10">
+          <a href="<%= isOwner ? '/traders/dashboard' : '/directory' %>" class="text-sm text-gray-500 hover:text-black flex items-center gap-1">
+            ← Back to <%= isOwner ? 'Dashboard' : 'Directory' %>
+          </a>
+        </div>
+      </div>
     </div>
 
-    <p id="trade-type-view"><%= profile.trade_type %></p>
+   <% if (!isOwner) { %>
+  <div class="lg:col-span-1 h-full">
+  <div class="bg-white p-6 shadow-sm rounded-lg border border-gray-100 h-full flex flex-col">
+    <h2 class="text-xl font-bold mb-6 text-gray-800">Book a Service</h2>
 
-    <% if (isOwner) { %>
-    <form
-      id="trade-type-edit"
-      class="hidden mt-2"
-      action="/traders/profile"
-      method="POST"
-    >
-      <input
-        type="text"
-        name="trade_type"
-        class="border p-2 w-full rounded"
-        value="<%= profile.trade_type %>"
-      />
+    <form action="/bookings" method="POST" class="space-y-4 grow">
+      <div>
+        <label for="client_name" class="block text-xs font-bold uppercase text-gray-500 tracking-wide">Client Name</label>
+        <input type="text" id="client_name" name="client_name" required class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm p-2 focus:ring-2 focus:ring-blue-500 outline-none transition">
+      </div>
 
-      <div class="mt-2 flex gap-2">
-        <button class="bg-black text-white px-3 py-1 rounded">Save</button>
-        <button type="button" onclick="toggleEdit('trade-type')" class="text-sm">
-          Cancel
+      <div>
+        <label for="client_email" class="block text-xs font-bold uppercase text-gray-500 tracking-wide">Email Address</label>
+        <input type="email" id="client_email" name="client_email" required class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm p-2 focus:ring-2 focus:ring-blue-500 outline-none transition">
+      </div>
+
+      <div>
+        <label for="service_id" class="block text-xs font-bold uppercase text-gray-500 tracking-wide">Selected Service</label>
+        <select id="service_id" name="service_id" required class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm p-2 focus:ring-2 focus:ring-blue-500 outline-none transition">
+          <option value="" disabled selected>Select a service...</option>
+          <% services.forEach(service => { %>
+            <option value="<%= service.id %>"><%= service.title %> (£<%= service.base_price %>)</option>
+          <% }) %>
+        </select>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label for="request_date" class="block text-xs font-bold uppercase text-gray-500 tracking-wide">Date</label>
+          <input type="date" id="request_date" name="request_date" required class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm p-2 focus:ring-2 focus:ring-blue-500 outline-none transition">
+        </div>
+        <div>
+          <label for="request_time" class="block text-xs font-bold uppercase text-gray-500 tracking-wide">Start Time</label>
+          <input type="time" id="request_time" name="request_time" required class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm p-2 focus:ring-2 focus:ring-blue-500 outline-none transition">
+        </div>
+      </div>
+
+      <div>
+        <label for="description" class="block text-xs font-bold uppercase text-gray-500 tracking-wide">Job Description</label>
+        <textarea id="description" name="description" rows="4" required minlength="10" class="mt-1 block w-full border border-gray-200 rounded-md shadow-sm p-2 focus:ring-2 focus:ring-blue-500 outline-none transition flex-grow" placeholder="How can the trader help?"></textarea>
+      </div>
+
+      <div class="pt-4 mt-auto">
+        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-md hover:bg-blue-700 transform active:scale-[0.98] transition duration-150 shadow-lg shadow-blue-200">
+          Submit Request
         </button>
       </div>
     </form>
-    <% } %>
   </div>
-
-  <!-- REGION -->
-  <div class="mb-6">
-    <div class="flex justify-between items-center mb-1">
-      <p class="font-semibold">Region</p>
-
-      <% if (isOwner) { %>
-        <button
-          type="button"
-          onclick="toggleEdit('region')"
-          class="text-gray-500 hover:text-black"
-        >
-          ✏️
-        </button>
-      <% } %>
-    </div>
-
-    <p id="region-view"><%= profile.region %></p>
-
-    <% if (isOwner) { %>
-    <form
-      id="region-edit"
-      class="hidden mt-2"
-      action="/traders/profile"
-      method="POST"
-    >
-      <input
-        type="text"
-        name="region"
-        class="border p-2 w-full rounded"
-        value="<%= profile.region %>"
-      />
-
-      <div class="mt-2 flex gap-2">
-        <button class="bg-black text-white px-3 py-1 rounded">Save</button>
-        <button type="button" onclick="toggleEdit('region')" class="text-sm">
-          Cancel
-        </button>
-      </div>
-    </form>
-    <% } %>
-  </div>
-
-  <!-- AVAILABILITY -->
-  <div class="mb-6">
-    <div class="flex justify-between items-center mb-1">
-      <p class="font-semibold">Availability</p>
-
-      <% if (isOwner) { %>
-        <button
-          type="button"
-          onclick="toggleEdit('availability')"
-          class="text-gray-500 hover:text-black"
-        >
-          ✏️
-        </button>
-      <% } %>
-    </div>
-
-    <p id="availability-view"><%= profile.availability %></p>
-
-    <% if (isOwner) { %>
-    <form
-      id="availability-edit"
-      class="hidden mt-2"
-      action="/traders/profile"
-      method="POST"
-    >
-      <input
-        type="text"
-        name="availability"
-        class="border p-2 w-full rounded"
-        value="<%= profile.availability %>"
-      />
-
-      <div class="mt-2 flex gap-2">
-        <button class="bg-black text-white px-3 py-1 rounded">Save</button>
-        <button type="button" onclick="toggleEdit('availability')" class="text-sm">
-          Cancel
-        </button>
-      </div>
-    </form>
-    <% } %>
-  </div>
-
-  <!-- BIO -->
-  <div class="mb-6">
-    <div class="flex justify-between items-center mb-1">
-      <p class="font-semibold">Bio</p>
-
-      <% if (isOwner) { %>
-        <button
-          type="button"
-          onclick="toggleEdit('bio')"
-          class="text-gray-500 hover:text-black"
-        >
-          ✏️
-        </button>
-      <% } %>
-    </div>
-
-    <p id="bio-view"><%= profile.bio %></p>
-
-    <% if (isOwner) { %>
-    <form
-      id="bio-edit"
-      class="hidden mt-2"
-      action="/traders/profile"
-      method="POST"
-    >
-      <textarea name="bio" rows="4" class="border p-2 w-full rounded">
-<%= profile.bio %></textarea>
-
-      <div class="mt-2 flex gap-2">
-        <button class="bg-black text-white px-3 py-1 rounded">Save</button>
-        <button type="button" onclick="toggleEdit('bio')" class="text-sm">
-          Cancel
-        </button>
-      </div>
-    </form>
-    <% } %>
-  </div>
-
-  <% } else { %>
-
-    <% if (isOwner) { %>
-      <p class="mb-4">You haven’t created a profile yet.</p>
-      <a
-        href="/traders/profile/create"
-        class="inline-block bg-black text-white px-4 py-2 rounded"
-      >
-        Create your profile
-      </a>
-    <% } else { %>
-      <p>This trader has not created a profile yet.</p>
-    <% } %>
-
   <% } %>
-
-  <div class="mt-6">
-    <a href="/traders/dashboard" class="text-sm text-gray-600 hover:underline">
-      ← Back to Dashboard
-    </a>
-  </div>
 </div>
 
 <script>

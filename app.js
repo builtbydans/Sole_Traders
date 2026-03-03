@@ -9,6 +9,7 @@ const authRoutes = require("./routes/authRoutes");
 const traderRoutes = require("./routes/tradersRoutes");
 const serviceRoutes = require("./routes/servicesRoutes");
 const profileRoutes = require("./routes/profileRoutes");
+const bookingsRoutes = require("./routes/bookingsRoutes");
 
 const db = require("./db/connection");
 
@@ -70,6 +71,7 @@ app.use("/", authRoutes);
 app.use("/traders", traderRoutes);
 app.use("/traders/profile", profileRoutes);
 app.use("/services", serviceRoutes);
+app.use("/bookings", bookingsRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

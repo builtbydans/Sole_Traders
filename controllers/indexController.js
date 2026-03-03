@@ -35,18 +35,52 @@ exports.renderDirectory = async (req, res) => {
   }
 };
 
-exports.renderTraderProfile = async (req, res) => {
+exports.renderPublicTraderProfile = async (req, res) => {
   const traderId = req.params.id;
+  try {
+    const profile = await indexModel.getTraderProfileById(traderId);
+    const services = await indexModel.getPublicTraderServicesById(traderId);
 
-  const profile = await indexModel.getTraderProfileById(traderId);
+    if (!profile) {
+      return res.status(404).send("Trader not found");
+    }
 
-  if (!profile) {
-    return res.status(404).send("Trader not found");
+    if (!services) {
+      req.session.flash = {
+        type: "error",
+        message: "No services found",
+      };
+    }
+
+    res.render("traders/profile", {
+      profile,
+      services: services || [],
+      isOwner: req.session.traderId == traderId,
+      loggedInTraderId: req.session.traderId || null
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error loading profile");
   }
+}
 
-  res.render("traders/profile", {
-    profile,
-    isOwner: req.session.traderId == profile.id,
-    loggedInTraderId: req.session.traderId,
-  });
+exports.renderTraderProfile = async (req, res) => {
+  const traderId = req.session.traderId;
+  if (!traderId) return res.redirect("/login");
+
+  try {
+    const profile = await indexModel.getTraderProfileById(traderId);
+
+    if (!profile) {
+      return res.status(404).send("Trader not found");
+    }
+
+    res.render("traders/profile", {
+      profile,
+      isOwner: req.session.traderId == profile.id,
+      loggedInTraderId: req.session.traderId,
+    });
+  } catch (err) {
+    res.status(500).send("Error loading your profile");
+  }
 };

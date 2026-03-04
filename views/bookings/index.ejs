@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-8xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <div class="bg-white p-6 rounded-lg shadow">
 
     <div class="flex justify-between items-center mb-6">
@@ -11,12 +11,24 @@
       </a>
     </div>
 
+    <form method="GET" action="/bookings" class="mb-6">
+      <select name="status">
+        <option value="">All bookings</option>
+        <option value="pending" <%= status === "pending" ? "selected" : "" %>>Pending</option>
+        <option value="confirmed" <%= status === "confirmed" ? "selected" : "" %>>Confirmed</option>
+        <option value="rejected" <%= status === "rejected" ? "selected" : "" %>>Rejected</option>
+      </select>
+
+      <button type="submit">Filter</button>
+    </form>
+
     <% if (bookings && bookings.length > 0) { %>
 
       <div class="overflow-x-auto">
         <table class="min-w-full divide-y divide-gray-200 text-sm">
           <thead class="bg-gray-50">
             <tr>
+              <th class="px-4 py-3 text-left font-semibold text-gray-600">Service</th>
               <th class="px-4 py-3 text-left font-semibold text-gray-600">Client</th>
               <th class="px-4 py-3 text-left font-semibold text-gray-600">Email</th>
               <th class="px-4 py-3 text-left font-semibold text-gray-600">Date</th>
@@ -32,6 +44,10 @@
             <% bookings.forEach(booking => { %>
               <tr class="hover:bg-gray-50 transition">
                 <td class="px-4 py-3 font-medium text-gray-800">
+                  <%= booking.title %>
+                </td>
+
+                <td class="px-4 py-3 font-medium text-gray-800">
                   <%= booking.client_name %>
                 </td>
 
@@ -40,7 +56,12 @@
                 </td>
 
                 <td class="px-4 py-3 text-gray-600">
-                  <%= booking.requested_date %>
+                  <%= new Date(booking.requested_date).toLocaleDateString("en-GB", {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric"
+                    }) %>
                 </td>
 
                 <td class="px-4 py-3 text-gray-600">
@@ -56,9 +77,9 @@
                     <span class="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-800">
                       Pending
                     </span>
-                  <% } else if (booking.status === "approved") { %>
+                  <% } else if (booking.status === "confirmed") { %>
                     <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-800">
-                      Approved
+                      Confirmed
                     </span>
                   <% } else if (booking.status === "rejected") { %>
                     <span class="px-2 py-1 text-xs rounded bg-red-100 text-red-800">
@@ -72,14 +93,34 @@
                 </td>
 
                 <td class="px-4 py-3 text-gray-500">
-                  <%= booking.created_at %>
+                     <%= new Date(booking.created_at).toLocaleDateString("en-GB", {
+                      weekday: "short",
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric"
+                    }) %>
                 </td>
 
-                 <td class="px-4 py-3 text-gray-500">
-                  <div class="flex justify-between gap-5">
-                    <button class="bg-green-300 p-1.5 rounded-md text-xs">Accept</button>
-                    <button class="bg-red-300 p-1.5 rounded-md text-xs">Reject</button>
-                  </div>
+                <td class="px-4 py-3 text-gray-500">
+                  <div class="flex gap-3">
+
+                    <% if (booking.status !== "confirmed") { %>
+                      <form action="/bookings/<%= booking.id %>/confirm" method="POST">
+                        <button class="bg-green-300 p-1.5 rounded-md text-xs" type="submit">
+                          Accept
+                        </button>
+                      </form>
+                    <% } %>
+
+                    <% if (booking.status !== "rejected") { %>
+                      <form action="/bookings/<%= booking.id %>/reject" method="POST">
+                        <button class="bg-red-300 p-1.5 rounded-md text-xs" type="submit">
+                          Reject
+                        </button>
+                      </form>
+                    <% } %>
+
+                    </div>
                 </td>
               </tr>
             <% }) %>

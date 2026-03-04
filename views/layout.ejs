@@ -8,5 +8,65 @@
   <body class="bg-gray-100 min-h-screen">
     <%- include("partials/navbar") %>
     <main class="p-8"><%- body %></main>
+    <footer class="bg-gray-950 text-white mt-16">
+  <div class="max-w-7xl mx-auto px-6 py-12">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+
+      <div>
+        <h3 class="text-xl font-semibold mb-4">Sole Traders</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">
+          Connecting homeowners with trusted local tradespeople across the UK.
+          Find reliable professionals for repairs, installations and home
+          improvements.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-4">Company</h4>
+        <ul class="space-y-2 text-gray-400 text-sm">
+          <li><a href="#" class="hover:text-white transition">About Us</a></li>
+          <li><a href="#" class="hover:text-white transition">Careers</a></li>
+          <li><a href="#" class="hover:text-white transition">Press</a></li>
+          <li><a href="#" class="hover:text-white transition">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-4">Discover</h4>
+        <ul class="space-y-2 text-gray-400 text-sm">
+          <li><a href="#" class="hover:text-white transition">Find a Plumber</a></li>
+          <li><a href="#" class="hover:text-white transition">Find an Electrician</a></li>
+          <li><a href="#" class="hover:text-white transition">Find a Builder</a></li>
+          <li><a href="#" class="hover:text-white transition">Browse Services</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-semibold mb-4">Popular Locations</h4>
+        <ul class="space-y-2 text-gray-400 text-sm">
+          <li><a href="#" class="hover:text-white transition">London</a></li>
+          <li><a href="#" class="hover:text-white transition">Manchester</a></li>
+          <li><a href="#" class="hover:text-white transition">Birmingham</a></li>
+          <li><a href="#" class="hover:text-white transition">Leeds</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
+
+      <p>© <%= new Date().getFullYear() %> Sole Traders. All rights reserved.</p>
+
+      <div class="flex gap-6 mt-4 md:mt-0">
+        <a href="#" class="hover:text-white transition">Privacy</a>
+        <a href="#" class="hover:text-white transition">Terms</a>
+        <a href="#" class="hover:text-white transition">Cookies</a>
+      </div>
+
+    </div>
+
+  </div>
+</footer>
   </body>
 </html>

@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
     req.session.traderId = trader.id;
     req.session.username = trader.username;
 
-    res.redirect("/traders/dashboard");
+    req.session.save(() => res.redirect("/traders/dashboard"));
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");

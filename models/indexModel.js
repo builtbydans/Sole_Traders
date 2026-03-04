@@ -1,13 +1,29 @@
 const db = require("../db/connection");
 
-exports.getPublicDirectoryDetails = async () => {
-  const [rows] = await db.query(`
+exports.getPublicDirectoryDetails = async (tradeType, region) => {
+  let query = `
     SELECT t.id, t.name, tp.trade_type, tp.region
     FROM traders t
     JOIN trader_profiles tp
-      ON t.id = tp.trader_id`);
+      ON t.id = tp.trader_id
+    WHERE 1=1
+  `;
+
+  const params = [];
+
+  if (tradeType) {
+    query += " AND tp.trade_type = ?";
+    params.push(tradeType);
+  }
+
+  if (region) {
+    query += " AND tp.region = ?";
+    params.push(region);
+  }
+
+  const [rows] = await db.query(query, params);
   return rows;
-}
+};
 
 exports.getPublicTraderServicesById = async (traderId) => {
   const [rows] = await db.query(

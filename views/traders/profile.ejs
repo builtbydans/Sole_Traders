@@ -1,3 +1,10 @@
+ <% if (flash) { %>
+    <div class="max-w-5xl mx-auto mb-6 p-4 rounded
+      <%= flash.type === 'success' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' %>">
+      <%= flash.message %>
+    </div>
+  <% } %>
+
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -128,7 +135,7 @@
       </div>
     </div>
 
-   <% if (!isOwner) { %>
+   <% if (!isOwner && services.length > 0) { %>
   <div class="lg:col-span-1 h-full">
   <div class="bg-white p-6 shadow-sm rounded-lg border border-gray-100 h-full flex flex-col">
     <h2 class="text-xl font-bold mb-6 text-gray-800">Book a Service</h2>
@@ -171,7 +178,7 @@
       </div>
 
       <div class="pt-4 mt-auto">
-        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-md hover:bg-blue-700 transform active:scale-[0.98] transition duration-150 shadow-lg shadow-blue-200">
+        <button type="submit" onclick="this.disabled=true; this.form.submit()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-md hover:bg-blue-700 transform active:scale-[0.98] transition duration-150 shadow-lg shadow-blue-200">
           Submit Request
         </button>
       </div>

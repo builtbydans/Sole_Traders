@@ -21,17 +21,24 @@ exports.renderHome = async (req, res) => {
 };
 
 exports.renderDirectory = async (req, res) => {
-  const id = req.params.id
-
   try {
-    const result = await indexModel.getPublicDirectoryDetails(id);
+    const { trade_type, region } = req.query;
+
+    const result = await indexModel.getPublicDirectoryDetails(
+      trade_type,
+      region
+    );
 
     res.render("directory", {
-      id,
+      title: "Public Directory",
       result,
+      trade_type,
+      region
     });
+
   } catch (err) {
-    console.log(err)
+    console.error(err);
+    res.status(500).send(err.message);
   }
 };
 
@@ -63,24 +70,3 @@ exports.renderPublicTraderProfile = async (req, res) => {
     res.status(500).send("Error loading profile");
   }
 }
-
-exports.renderTraderProfile = async (req, res) => {
-  const traderId = req.session.traderId;
-  if (!traderId) return res.redirect("/login");
-
-  try {
-    const profile = await indexModel.getTraderProfileById(traderId);
-
-    if (!profile) {
-      return res.status(404).send("Trader not found");
-    }
-
-    res.render("traders/profile", {
-      profile,
-      isOwner: req.session.traderId == profile.id,
-      loggedInTraderId: req.session.traderId,
-    });
-  } catch (err) {
-    res.status(500).send("Error loading your profile");
-  }
-};

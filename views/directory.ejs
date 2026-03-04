@@ -6,6 +6,32 @@
   <% if (result.length === 0) { %>
     <p class="text-center text-gray-500">No traders found.</p>
   <% } else { %>
+      <form method="GET" action="/directory" class="flex gap-4 mb-6">
+
+      <select name="trade_type">
+        <option value="">All Trades</option>
+        <option value="Plumber">Plumber</option>
+        <option value="Electrician">Electrician</option>
+        <option value="Builder">Builder</option>
+        <option value="Roofer">Roofer</option>
+        <option value="Decorator">Decorator</option>
+        <option value="Handyman">Handyman</option>
+
+      </select>
+
+      <select name="region">
+        <option value="">All Regions</option>
+        <option value="London">London</option>
+        <option value="Leeds">Leeds</option>
+        <option value="Birmingham">Birmingham</option>
+        <option value="Liverpool">Liverpool</option>
+        <option value="Bristol">Bristol</option>
+
+      </select>
+
+      <button type="submit">Filter</button>
+
+    </form>
     <ul class="space-y-4">
        <div class="flex justify-between">
          <span class="text-sm">

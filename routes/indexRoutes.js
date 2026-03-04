@@ -16,6 +16,4 @@ router.get("/set-name", (req, res) => {
   res.send("Name set");
 });
 
-
-
 module.exports = router;

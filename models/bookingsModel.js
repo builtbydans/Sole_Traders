@@ -1,11 +1,27 @@
 db = require("../db/connection");
 
-exports.getBookingsByTraderId = async (traderId) => {
-  const [rows] = await db.query(`
-    SELECT * FROM bookings WHERE trader_id = ?`,
-    traderId);
+exports.getBookingsByTraderId = async (traderId, status) => {
+  let query = `
+    SELECT bookings.*, services.title
+    FROM bookings
+    JOIN services
+      ON bookings.service_id = services.id
+    WHERE bookings.trader_id = ?
+  `;
+
+  const params = [traderId];
+
+  if (status) {
+    query += ` AND bookings.status = ?`;
+    params.push(status);
+  }
+
+  query += ` ORDER BY requested_date DESC`;
+
+  const [rows] = await db.query(query, params);
+
   return rows;
-}
+};
 
 exports.createNewBooking = async (traderId, data) => {
   let {
@@ -44,3 +60,12 @@ exports.createNewBooking = async (traderId, data) => {
     ]
   );
 }
+
+exports.updateBookingStatus = async (bookingId, status) => {
+  await db.query(
+    `UPDATE bookings
+     SET status = ?
+     WHERE id = ?`,
+    [status, bookingId]
+  );
+};

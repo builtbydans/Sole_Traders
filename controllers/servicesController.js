@@ -35,7 +35,7 @@ exports.addService = async (req, res) => {
       type: "success",
       message: "Service added successfully.",
     };
-    return res.redirect("/services/new"); // or /services
+    return res.redirect("/services");
   } catch (err) {
     console.error(err);
     req.session.flash = {
